@@ -31,7 +31,7 @@ def generate_launch_description():
         model_type = LaunchConfiguration("model_type")
         model_type_cmd = DeclareLaunchArgument(
             "model_type",
-            default_value="YOLO",
+            default_value="YOLOE",
             choices=["YOLO", "World", "YOLOE"],
             description="Model type form Ultralytics (YOLO, World, YOLOE)",
         )
@@ -39,7 +39,7 @@ def generate_launch_description():
         model = LaunchConfiguration("model")
         model_cmd = DeclareLaunchArgument(
             "model",
-            default_value="yolov8m.pt",
+            default_value="yoloe-11l-seg.pt",
             description="Model name or path",
         )
 
@@ -74,7 +74,7 @@ def generate_launch_description():
         threshold = LaunchConfiguration("threshold")
         threshold_cmd = DeclareLaunchArgument(
             "threshold",
-            default_value="0.5",
+            default_value="0.1",
             description="Minimum probability of a detection to be published",
         )
 
@@ -102,7 +102,7 @@ def generate_launch_description():
         half = LaunchConfiguration("half")
         half_cmd = DeclareLaunchArgument(
             "half",
-            default_value="False",
+            default_value="True",
             description="Whether to enable half-precision (FP16) inference speeding up model inference with minimal impact on accuracy",
         )
 
@@ -116,7 +116,7 @@ def generate_launch_description():
         augment = LaunchConfiguration("augment")
         augment_cmd = DeclareLaunchArgument(
             "augment",
-            default_value="False",
+            default_value="True",
             description="Whether to enable test-time augmentation (TTA) for predictions improving detection robustness at the cost of speed",
         )
 
@@ -137,7 +137,7 @@ def generate_launch_description():
         input_image_topic = LaunchConfiguration("input_image_topic")
         input_image_topic_cmd = DeclareLaunchArgument(
             "input_image_topic",
-            default_value="/camera/rgb/image_raw",
+            default_value="/rozum/D455_1/color/image_raw",
             description="Name of the input image topic",
         )
 
@@ -152,7 +152,7 @@ def generate_launch_description():
         input_depth_topic = LaunchConfiguration("input_depth_topic")
         input_depth_topic_cmd = DeclareLaunchArgument(
             "input_depth_topic",
-            default_value="/camera/depth/image_raw",
+            default_value="/rozum/D455_1/aligned_depth_to_color/image_raw",
             description="Name of the input depth topic",
         )
 
@@ -167,7 +167,7 @@ def generate_launch_description():
         input_depth_info_topic = LaunchConfiguration("input_depth_info_topic")
         input_depth_info_topic_cmd = DeclareLaunchArgument(
             "input_depth_info_topic",
-            default_value="/camera/depth/camera_info",
+            default_value="/rozum/D455_1/aligned_depth_to_color/camera_info",
             description="Name of the input depth info topic",
         )
 
@@ -196,7 +196,7 @@ def generate_launch_description():
         maximum_detection_threshold = LaunchConfiguration("maximum_detection_threshold")
         maximum_detection_threshold_cmd = DeclareLaunchArgument(
             "maximum_detection_threshold",
-            default_value="0.3",
+            default_value="5.0",
             description="Maximum detection threshold in the z axis",
         )
 
@@ -341,7 +341,7 @@ def generate_launch_description():
     use_3d = LaunchConfiguration("use_3d")
     use_3d_cmd = DeclareLaunchArgument(
         "use_3d",
-        default_value="False",
+        default_value="True",
         description="Whether to activate 3D detections",
     )
 

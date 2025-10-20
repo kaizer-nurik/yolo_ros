@@ -129,11 +129,24 @@ class YoloNode(LifecycleNode):
     def on_activate(self, state: LifecycleState) -> TransitionCallbackReturn:
         self.get_logger().info(f"[{self.get_name()}] Activating...")
 
+        # try:
+        #     self.yolo = self.type_to_model[self.model_type](self.model)
+        # except FileNotFoundError:
+        #     self.get_logger().error(f"Model file '{self.model}' does not exists")
+        #     return TransitionCallbackReturn.ERROR
+
+        self.yolo = YOLO("yoloe-11l-seg.pt")
+        names = ["robot","manipulator","tennis ball",'blue container','teddy bear']
+        
+        # self.yolo.set_classes(names, self.yolo.get_text_pe(names))
+
+        self.get_logger().info(f"Setting classes: {names}")
         try:
-            self.yolo = self.type_to_model[self.model_type](self.model)
-        except FileNotFoundError:
-            self.get_logger().error(f"Model file '{self.model}' does not exists")
-            return TransitionCallbackReturn.ERROR
+            self.yolo.set_classes(names,self.yolo.get_text_pe(names))
+        except Exception as e:
+            self.get_logger().error(f"Error while setting classes: {e}")
+        self.get_logger().info(f"New classes: {self.yolo.names}")
+
 
         # YOLOE does not support fusing
         if isinstance(self.yolo, YOLO) or isinstance(self.yolo, YOLOWorld):
@@ -156,6 +169,7 @@ class YoloNode(LifecycleNode):
 
         super().on_activate(state)
         self.get_logger().info(f"[{self.get_name()}] Activated")
+
 
         return TransitionCallbackReturn.SUCCESS
 
@@ -339,7 +353,7 @@ class YoloNode(LifecycleNode):
                 stream=False,
                 conf=self.threshold,
                 iou=self.iou,
-                imgsz=(self.imgsz_height, self.imgsz_width),
+                imgsz=1080,
                 half=self.half,
                 max_det=self.max_det,
                 augment=self.augment,
